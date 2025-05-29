@@ -1,20 +1,8 @@
-# Usa la imagen base oficial de Node.js
-FROM node:20-slim
+FROM openjdk:11
 
-# Configura el directorio de trabajo
-WORKDIR /app
+WORKDIR /usr/src/app
 
-# Copia archivos de dependencias
-COPY package*.json ./
+COPY build/libs/*.jar app.jar
 
-# Instala dependencias
-RUN npm install --production
-
-# Copia el resto de archivos
-COPY . .
-
-# Puerto expuesto (debe coincidir con el de Cloud Run)
 EXPOSE 8080
-
-# Comando de inicio
-CMD ["node", "server.js"]
+CMD ["java", "-jar", "app.jar"]
